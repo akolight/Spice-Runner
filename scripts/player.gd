@@ -35,6 +35,7 @@ func _on_obstacle_body_entered(body):
 func momentum(delta):
 	if is_on_floor() and move_speed > 0:
 		move_speed += 1 * delta
+		$AnimPlayer.speed_scale += 0.01 
 
 func score_count():
 		score = $"..".progress * 200

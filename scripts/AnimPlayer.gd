@@ -5,7 +5,9 @@ extends AnimationPlayer
 func _physics_process(delta):
 	
 	if player.velocity.y > 0:
+		$".".speed_scale = 1
 		play("run jump")
+		
 	
 	#if player.velocity.y < 0:
 		#play("fall to land")
