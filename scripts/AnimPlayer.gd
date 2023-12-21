@@ -4,7 +4,7 @@ extends AnimationPlayer
 
 func _physics_process(delta):
 	
-	if player.velocity.y > 0:
+	if player.velocity.y > 0 and Input.is_action_just_pressed("jump"):
 		$".".speed_scale = 1
 		play("run jump")
 		

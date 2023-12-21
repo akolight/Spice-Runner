@@ -1,22 +1,14 @@
-[gd_scene load_steps=14 format=3 uid="uid://ceuiiixga7icc"]
+[gd_scene load_steps=17 format=3 uid="uid://ceuiiixga7icc"]
 
 [ext_resource type="Script" path="res://scripts/platform_test.gd" id="1_xj7bj"]
 [ext_resource type="PackedScene" uid="uid://d6ggrtetfvaf" path="res://scenes/player.tscn" id="2_8b603"]
 [ext_resource type="Environment" uid="uid://clupu2u2jcrxq" path="res://env_bsc.tres" id="3_7ghyl"]
-[ext_resource type="Script" path="res://scripts/PathFollow.gd" id="3_hsm6t"]
 [ext_resource type="Script" path="res://scripts/PlayerCamera.gd" id="3_qb8pb"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vtuvs"]
 size = Vector3(5.13092, 1, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_3qjk8"]
-
-[sub_resource type="Curve3D" id="Curve3D_0qtem"]
-_data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 2.08165e-12, 2.08165e-12, 2.08165e-12, 0, 0, 0, 0, 0, 0, 4.1, 2.08165e-12, 2.08165e-12, 0, 0, 0, 0, 0, 0, 50, 2.08165e-12, 2.08165e-12),
-"tilts": PackedFloat32Array(0, 0, 0)
-}
-point_count = 3
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yb8wp"]
 size = Vector3(0.150391, 0.65773, 1)
@@ -25,11 +17,27 @@ size = Vector3(0.150391, 0.65773, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_r124j"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_r4bp0"]
-size = Vector3(0.331055, 3.68909, 1)
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_w4882"]
 size = Vector3(2.73901, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_k5fon"]
+size = Vector3(0.505615, 8.04889, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_on7sq"]
+size = Vector3(0.0874023, 2.86243, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vsc5m"]
+albedo_color = Color(0.211765, 0.454902, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_24i5u"]
+material = SubResource("StandardMaterial3D_vsc5m")
+size = Vector3(5, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bw7pm"]
+size = Vector3(4.99957, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7d08a"]
+size = Vector3(13.6458, 4.29821, 2.194)
 
 [node name="platform_test" type="Node3D"]
 script = ExtResource("1_xj7bj")
@@ -148,15 +156,6 @@ shape = SubResource("BoxShape3D_vtuvs")
 transform = Transform3D(5.12775, 0, 0, 0, 1, 0, 4.6265e-15, 0, 1, 0, 0, 0)
 mesh = SubResource("BoxMesh_3qjk8")
 
-[node name="Path" type="Path3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 0.5, 2.08165e-12)
-curve = SubResource("Curve3D_0qtem")
-
-[node name="PathFollow" type="PathFollow3D" parent="Path"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 2.08165e-12, 2.08165e-12, 2.08165e-12)
-loop = false
-script = ExtResource("3_hsm6t")
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.866025, 2.15924e-07, -0.5, 0.25, 0.866025, 0.433013, 0.433013, -0.5, 0.75, 1, 5, 0)
 light_energy = 0.75
@@ -197,13 +196,21 @@ skeleton = NodePath("../../KillBoxArea")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SolidBox"]
 shape = SubResource("BoxShape3D_r124j")
 
-[node name="GoalBoxArea" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46.4739, 1.46264, 0)
+[node name="FallArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.9738, 0.703295, 0)
 
-[node name="Goalbox" type="CollisionShape3D" parent="GoalBoxArea"]
-shape = SubResource("BoxShape3D_r4bp0")
+[node name="FallCollision" type="CollisionShape3D" parent="FallArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.226441, 0, 0)
+shape = SubResource("BoxShape3D_w4882")
 
-[node name="Control" type="Control" parent="GoalBoxArea/Goalbox"]
+[node name="TippingPointArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0.5, 2.08165e-12)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TippingPointArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.247192, 3.81064, 0)
+shape = SubResource("BoxShape3D_k5fon")
+
+[node name="Control" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -211,7 +218,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ScoreLabel" type="Label" parent="GoalBoxArea/Goalbox/Control"]
+[node name="ScoreLabel" type="Label" parent="Control"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.01
@@ -222,12 +229,12 @@ offset_right = 1.0
 offset_bottom = 42.0
 theme_override_font_sizes/font_size = 40
 
-[node name="debug_prg" type="Label" parent="GoalBoxArea/Goalbox/Control"]
+[node name="debug_prg" type="Label" parent="Control"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 
-[node name="debug_spd" type="Label" parent="GoalBoxArea/Goalbox/Control"]
+[node name="debug_spd" type="Label" parent="Control"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -237,7 +244,7 @@ offset_right = 20.0
 offset_bottom = 23.0
 grow_horizontal = 2
 
-[node name="debug_tim" type="Label" parent="GoalBoxArea/Goalbox/Control"]
+[node name="debug_tim" type="Label" parent="Control"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -246,14 +253,58 @@ offset_left = -40.0
 offset_bottom = 23.0
 grow_horizontal = 0
 
-[node name="Area3D" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.9738, 0.703295, 0)
+[node name="GoalArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50.8269, 0.5, 2.08165e-12)
+visible = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.226441, 0, 0)
-shape = SubResource("BoxShape3D_w4882")
+[node name="GoalCollide" type="CollisionShape3D" parent="GoalArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.456299, 0.931213, 0)
+shape = SubResource("BoxShape3D_on7sq")
+
+[node name="BlueBody" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.6428, 11.5306, 2.08165e-12)
+collision_layer = 2
+
+[node name="BlueMesh" type="MeshInstance3D" parent="BlueBody"]
+mesh = SubResource("BoxMesh_24i5u")
+
+[node name="BlueCollide" type="CollisionShape3D" parent="BlueBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00552368, 0, 0)
+shape = SubResource("BoxShape3D_bw7pm")
+
+[node name="BlueBody2" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.6165, 11.5306, 2.08165e-12)
+collision_layer = 2
+
+[node name="BlueMesh" type="MeshInstance3D" parent="BlueBody2"]
+mesh = SubResource("BoxMesh_24i5u")
+
+[node name="BlueCollide" type="CollisionShape3D" parent="BlueBody2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00552368, 0, 0)
+shape = SubResource("BoxShape3D_bw7pm")
+
+[node name="BlueBody3" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.6118, 11.5306, 2.08165e-12)
+collision_layer = 2
+
+[node name="BlueMesh" type="MeshInstance3D" parent="BlueBody3"]
+mesh = SubResource("BoxMesh_24i5u")
+
+[node name="BlueCollide" type="CollisionShape3D" parent="BlueBody3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00552368, 0, 0)
+shape = SubResource("BoxShape3D_bw7pm")
+
+[node name="FlipArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 6.04891, 2.08165e-12)
+
+[node name="FlipCollide" type="CollisionShape3D" parent="FlipArea"]
+transform = Transform3D(1, 0, 0, 0, 0.993278, 0.115752, 0, -0.115752, 0.993278, 4.63746, -0.639395, 0.607575)
+shape = SubResource("BoxShape3D_7d08a")
 
 [connection signal="body_entered" from="KillBoxArea" to="player" method="_on_obstacle_body_entered"]
 [connection signal="body_entered" from="KillBoxArea2" to="player" method="_on_obstacle_body_entered"]
-[connection signal="body_entered" from="GoalBoxArea" to="player" method="_on_goal_box_area_body_entered"]
-[connection signal="body_entered" from="Area3D" to="player" method="_on_area_3d_body_entered"]
+[connection signal="body_entered" from="FallArea" to="player" method="_on_area_3d_body_entered"]
+[connection signal="body_entered" from="TippingPointArea" to="player" method="_on_tipping_point_area_body_entered"]
+[connection signal="body_entered" from="GoalArea" to="player" method="_on_goal_area_body_entered"]
+[connection signal="body_entered" from="FlipArea" to="player" method="_on_flip_area_body_entered"]
+[connection signal="body_exited" from="FlipArea" to="PlayerCamera" method="_on_flip_area_body_exited"]
