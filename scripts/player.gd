@@ -6,12 +6,15 @@ var move_speed = Global.move_speed
 
 var score = 0
 var velocity_reset = 4
+var anim_speed = 1.0
+const anim_multi = 0.01
 
 const SPEED = 1.0
-const JUMP_VELOCITY = 4
+const JUMP_VELOCITY = 5
 
 func _ready():
 	velocity.x = 4
+	anim_speed = $AnimPlayer.get_speed_scale
 
 func _process(delta):
 	#player_position()
@@ -21,26 +24,43 @@ func _process(delta):
 func _physics_process(delta):
 	$"../Control/debug_spd".set_text(str(velocity.x))
 	$"../Control/debug_tim".text = str(Global.elapsed_time_in_ms)
-	
 	if not is_on_floor():
 		velocity.y -= gravity * delta
-	
+		
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 		if velocity.x == 0:
-			velocity.x = velocity_reset
+			$CollisionShape3D.set_disabled(true)
+			velocity.x = 4
+			await get_tree().create_timer(0.5).timeout
+			$CollisionShape3D.set_disabled(false)
+	
+	# Handle upside down jump
+	if Input.is_action_just_pressed("jump") and is_on_ceiling():
+		velocity.y = -1 * JUMP_VELOCITY
+		if velocity.x == 0:
+			$CollisionShape3D.set_disabled(true)
+			velocity.x = 4
+			await get_tree().create_timer(0.5).timeout
+			$CollisionShape3D.set_disabled(false)
 	
 	move_and_slide()
 
-func _on_obstacle_body_entered(body):
-	velocity.x = 0
+#func _on_obstacle_body_entered(body):
+	#velocity.x = 0
 
 func momentum(delta):
 	if is_on_floor() and velocity.x > 0:
 		velocity.x += 1 * delta
-		$AnimPlayer.speed_scale += 0.01
+		$AnimPlayer.speed_scale += anim_multi
+		anim_speed = $AnimPlayer.get_speed_scale
+		
 		#print(velocity.x)
+	if is_on_ceiling() and velocity.x > 0:
+		velocity.x += 1 * delta
+		$AnimPlayer.speed_scale += anim_multi
+		anim_speed = $AnimPlayer.get_speed_scale
 
 func score_count(delta):
 		score += 1 * delta

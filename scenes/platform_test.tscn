@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://ceuiiixga7icc"]
+[gd_scene load_steps=18 format=3 uid="uid://ceuiiixga7icc"]
 
 [ext_resource type="Script" path="res://scripts/platform_test.gd" id="1_xj7bj"]
 [ext_resource type="PackedScene" uid="uid://d6ggrtetfvaf" path="res://scenes/player.tscn" id="2_8b603"]
@@ -9,6 +9,9 @@
 size = Vector3(5.13092, 1, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_3qjk8"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wh2uo"]
+height = 5.28094
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yb8wp"]
 size = Vector3(0.150391, 0.65773, 1)
@@ -63,8 +66,8 @@ transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-
 collision_layer = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlatformTwo"]
-transform = Transform3D(1, -1.21652e-31, 0, -1.21652e-31, 1, 0, 0, 0, 1, 0, 0, 2.08165e-12)
-shape = SubResource("BoxShape3D_vtuvs")
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 6.97574e-16, -6.97574e-16, 0, 1, 0, 0, 2.08165e-12)
+shape = SubResource("CapsuleShape3D_wh2uo")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="PlatformTwo"]
 transform = Transform3D(5.12775, 0, 0, 0, 1, 0, 4.32763e-15, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
@@ -164,7 +167,7 @@ light_energy = 0.75
 environment = ExtResource("3_7ghyl")
 
 [node name="KillBoxArea" type="Area3D" parent="." groups=["obstacles"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.74781, 0.705109, 2.08165e-12)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.74781, -0.437643, 2.08165e-12)
 collision_layer = 4
 
 [node name="KillBox" type="CollisionShape3D" parent="KillBoxArea"]
@@ -204,7 +207,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.226441, 0, 0)
 shape = SubResource("BoxShape3D_w4882")
 
 [node name="TippingPointArea" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0.5, 2.08165e-12)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.0348, 0.5, 2.08165e-12)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TippingPointArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.247192, 3.81064, 0)
@@ -229,7 +232,7 @@ offset_right = 1.0
 offset_bottom = 42.0
 theme_override_font_sizes/font_size = 40
 
-[node name="debug_prg" type="Label" parent="Control"]
+[node name="debug_ani" type="Label" parent="Control"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
@@ -254,15 +257,13 @@ offset_bottom = 23.0
 grow_horizontal = 0
 
 [node name="GoalArea" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50.8269, 0.5, 2.08165e-12)
-visible = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 78.199, 8.24915, 2.08165e-12)
 
 [node name="GoalCollide" type="CollisionShape3D" parent="GoalArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.456299, 0.931213, 0)
 shape = SubResource("BoxShape3D_on7sq")
 
 [node name="BlueBody" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.6428, 11.5306, 2.08165e-12)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.3078, 11.5306, 2.08165e-12)
 collision_layer = 2
 
 [node name="BlueMesh" type="MeshInstance3D" parent="BlueBody"]
@@ -273,7 +274,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00552368, 0, 0)
 shape = SubResource("BoxShape3D_bw7pm")
 
 [node name="BlueBody2" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.6165, 11.5306, 2.08165e-12)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 52.2815, 11.5306, 2.08165e-12)
 collision_layer = 2
 
 [node name="BlueMesh" type="MeshInstance3D" parent="BlueBody2"]
@@ -284,7 +285,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00552368, 0, 0)
 shape = SubResource("BoxShape3D_bw7pm")
 
 [node name="BlueBody3" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.6118, 11.5306, 2.08165e-12)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 57.2768, 11.5306, 2.08165e-12)
 collision_layer = 2
 
 [node name="BlueMesh" type="MeshInstance3D" parent="BlueBody3"]
@@ -294,8 +295,52 @@ mesh = SubResource("BoxMesh_24i5u")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00552368, 0, 0)
 shape = SubResource("BoxShape3D_bw7pm")
 
+[node name="BlueBody4" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 61.8322, 10.782, 2.08165e-12)
+collision_layer = 2
+
+[node name="BlueMesh" type="MeshInstance3D" parent="BlueBody4"]
+mesh = SubResource("BoxMesh_24i5u")
+
+[node name="BlueCollide" type="CollisionShape3D" parent="BlueBody4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00552368, 0, 0)
+shape = SubResource("BoxShape3D_bw7pm")
+
+[node name="BlueBody5" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.501, 10.782, 2.08165e-12)
+collision_layer = 2
+
+[node name="BlueMesh" type="MeshInstance3D" parent="BlueBody5"]
+mesh = SubResource("BoxMesh_24i5u")
+
+[node name="BlueCollide" type="CollisionShape3D" parent="BlueBody5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00552368, 0, 0)
+shape = SubResource("BoxShape3D_bw7pm")
+
+[node name="BlueBody7" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71.1272, 10.3521, 2.08165e-12)
+collision_layer = 2
+
+[node name="BlueMesh" type="MeshInstance3D" parent="BlueBody7"]
+mesh = SubResource("BoxMesh_24i5u")
+
+[node name="BlueCollide" type="CollisionShape3D" parent="BlueBody7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00552368, 0, 0)
+shape = SubResource("BoxShape3D_bw7pm")
+
+[node name="BlueBody6" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 76.0808, 10.352, 2.08165e-12)
+collision_layer = 2
+
+[node name="BlueMesh" type="MeshInstance3D" parent="BlueBody6"]
+mesh = SubResource("BoxMesh_24i5u")
+
+[node name="BlueCollide" type="CollisionShape3D" parent="BlueBody6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00552368, 0, 0)
+shape = SubResource("BoxShape3D_bw7pm")
+
 [node name="FlipArea" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 6.04891, 2.08165e-12)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46.7219, 6.04891, 2.08165e-12)
 
 [node name="FlipCollide" type="CollisionShape3D" parent="FlipArea"]
 transform = Transform3D(1, 0, 0, 0, 0.993278, 0.115752, 0, -0.115752, 0.993278, 4.63746, -0.639395, 0.607575)

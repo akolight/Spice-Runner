@@ -19,7 +19,7 @@ func _physics_process(delta):
 	set_position(player_pos)
 
 
-#func _on_flip_area_body_exited(body):
-	#x_offset = 2.0
-	#y_offset = -2.0
-	#z_offset = 4.0
+func _on_flip_area_body_exited(body):
+	x_offset = 2.0
+	y_offset = -2.0
+	z_offset = 4.0
