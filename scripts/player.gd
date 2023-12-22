@@ -8,9 +8,10 @@ var score = 0
 var velocity_reset = 4
 var anim_speed = 1.0
 const anim_multi = 0.01
+var jump_count = 1
 
 const SPEED = 1.0
-const JUMP_VELOCITY = 5
+const JUMP_VELOCITY = 4
 
 func _ready():
 	velocity.x = 4
@@ -20,31 +21,38 @@ func _process(delta):
 	#player_position()
 	score_count(delta)
 	momentum(delta)
+	
+	jump_count = Global.jump_count
 
 func _physics_process(delta):
 	$"../Control/debug_spd".set_text(str(velocity.x))
 	$"../Control/debug_tim".text = str(Global.elapsed_time_in_ms)
+	if velocity.x < 0:
+		velocity.x = velocity_reset
+
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 		
 	# Handle jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	if Input.is_action_just_pressed("jump") and is_on_floor() and jump_count > 0:
 		velocity.y = JUMP_VELOCITY
 		if velocity.x == 0:
 			$CollisionShape3D.set_disabled(true)
-			velocity.x = 4
+			velocity.x = velocity_reset
 			await get_tree().create_timer(0.5).timeout
 			$CollisionShape3D.set_disabled(false)
 	
 	# Handle upside down jump
-	if Input.is_action_just_pressed("jump") and is_on_ceiling():
+	if Input.is_action_just_pressed("jump") and is_on_ceiling() and jump_count > 0:
 		velocity.y = -1 * JUMP_VELOCITY
 		if velocity.x == 0:
 			$CollisionShape3D.set_disabled(true)
-			velocity.x = 4
+			velocity.x = velocity_reset
 			await get_tree().create_timer(0.5).timeout
 			$CollisionShape3D.set_disabled(false)
 	
+	# Handle slide
+	#if Input.is_action_just_pressed("slide") and is_on_floor():
 	move_and_slide()
 
 #func _on_obstacle_body_entered(body):
@@ -86,12 +94,12 @@ func _on_area_3d_body_entered(body):
 	get_tree().change_scene_to_file("res://scenes/lose.tscn")
 
 func _on_tipping_point_area_body_entered(body):
-	print(str("old grav: ",gravity))
+	#print(str("old grav: ",gravity))
 	gravity *= -1
-	print(str("new grav: ",gravity))
+	#print(str("new grav: ",gravity))
 
 func _on_goal_area_body_entered(body):
-	print("collide")
+	#print("collide")
 	get_tree().change_scene_to_file("res://scenes/win.tscn")
 
 

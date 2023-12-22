@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://ceuiiixga7icc"]
+[gd_scene load_steps=20 format=3 uid="uid://ceuiiixga7icc"]
 
 [ext_resource type="Script" path="res://scripts/platform_test.gd" id="1_xj7bj"]
 [ext_resource type="PackedScene" uid="uid://d6ggrtetfvaf" path="res://scenes/player.tscn" id="2_8b603"]
@@ -41,6 +41,10 @@ size = Vector3(4.99957, 1, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7d08a"]
 size = Vector3(13.6458, 4.29821, 2.194)
+
+[sub_resource type="BoxMesh" id="BoxMesh_827vc"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qlne7"]
 
 [node name="platform_test" type="Node3D"]
 script = ExtResource("1_xj7bj")
@@ -106,6 +110,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.00497, 0, 0)
 shape = SubResource("BoxShape3D_vtuvs")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="PlatformOne3"]
+transform = Transform3D(5.12775, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+layers = 2
+mesh = SubResource("BoxMesh_3qjk8")
+
+[node name="PlatformOne6" type="StaticBody3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 36.7276, 0, -5.63967e-07)
+collision_layer = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlatformOne6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.00497, 0, 0)
+shape = SubResource("BoxShape3D_vtuvs")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PlatformOne6"]
 transform = Transform3D(5.12775, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
 layers = 2
 mesh = SubResource("BoxMesh_3qjk8")
@@ -345,6 +362,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46.7219, 6.04891, 2.08165e-12
 [node name="FlipCollide" type="CollisionShape3D" parent="FlipArea"]
 transform = Transform3D(1, 0, 0, 0, 0.993278, 0.115752, 0, -0.115752, 0.993278, 4.63746, -0.639395, 0.607575)
 shape = SubResource("BoxShape3D_7d08a")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.7276, 2.28183, -5.63967e-07)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("BoxMesh_827vc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_qlne7")
 
 [connection signal="body_entered" from="KillBoxArea" to="player" method="_on_obstacle_body_entered"]
 [connection signal="body_entered" from="KillBoxArea2" to="player" method="_on_obstacle_body_entered"]

@@ -13,6 +13,8 @@ var pathfollow_current_progress = 0
 var move_speed = 4.0
 var move_reset = 4.0
 
+var jump_count = 1
+
 func _ready():
 	pass
 
@@ -21,6 +23,7 @@ func _process(delta):
 		elapsed_time_in_ms = floor((Time.get_ticks_msec() - start_time))
 		elapsed_time_in_sec = (Time.get_ticks_msec() - start_time) / 1000
 		#print(elapsed_time_in_sec)
+		#print(jump_count)
 
 func set_timer(is_start):
 	if is_start:
